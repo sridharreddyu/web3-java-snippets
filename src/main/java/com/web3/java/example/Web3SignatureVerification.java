@@ -12,10 +12,11 @@ import org.web3j.utils.Numeric;
  * This class gives example code of verifying the Signature signed by Web3
  * crypto wallets like MetaMask etc..
  */
-class Web3SignatureVerification {
+public class Web3SignatureVerification {
 
 	private static final Logger log = LoggerFactory.getLogger(Web3SignatureVerification.class);
 
+	
 	/**
 	 * This method verifies signedMessages which signed by the user wallet (by using his private key).
 	 * 
@@ -45,20 +46,22 @@ class Web3SignatureVerification {
 	 * @param originalMessage
 	 * @throws SignatureException
 	 */
-	private static void verifySignature(String address, String signedMessage, String originalMessage)
+	public static boolean verifySignature(String address, String signedMessage, String originalMessage)
 			throws SignatureException {
 
 		String decryptedAddress = getAddressUsedToSignHashedPrefixedMessage(signedMessage, originalMessage);
-
+		decryptedAddress = "0x" + decryptedAddress;
 		System.out.println("Address :          " + address);
-		System.out.println("decryptedAddress : 0x" + decryptedAddress);
+		System.out.println("decryptedAddress : " + decryptedAddress);
 		// val messageHashBytes = Numeric.hexStringToByteArray(messageHashed)
 		
 		if(address.equals(decryptedAddress)) {
 			// if verification successfull, you can build other business logic here.
 			System.out.println("Signature Verified");
+			return true;
 		} else {
 			System.err.println("Signature Verified Failed");
+			return false;
 		}
 	}
 
